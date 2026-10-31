@@ -2030,6 +2030,125 @@ const STUDY_MODES = {
 let studyMode = 'learn';
 let studyBusy = false;
 let studyCtrl = null;
+  let studyConversation = [];
+let studyChatBusy = false;
+let studyChatCtrl = null;
+
+function resetStudyConversation() {
+  studyChatCtrl?.abort();
+  studyChatCtrl = null;
+  studyChatBusy = false;
+  studyConversation = [];
+
+  const chat = $('studyChat');
+  const messages = $('studyChatMessages');
+  const input = $('studyChatInput');
+  const status = $('studyChatStatus');
+  const send = $('studyChatSend');
+
+  if (chat) chat.hidden = true;
+  if (messages) messages.replaceChildren();
+  if (input) input.value = '';
+  if (status) status.textContent = '';
+  if (send) send.disabled = false;
+}
+
+function addStudyChatMessage(role, text) {
+  const box = $('studyChatMessages');
+  const message = document.createElement('div');
+
+  message.className = 'study-chat-message ' + role;
+  message.innerHTML = md(text);
+
+  box.appendChild(message);
+  return message;
+}
+
+async function sendStudyFollowUp(event) {
+  event.preventDefault();
+
+  if (studyChatBusy) return;
+
+  const input = $('studyChatInput');
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const chat = $('studyChat');
+  const status = $('studyChatStatus');
+  const send = $('studyChatSend');
+
+  studyChatBusy = true;
+
+  const controller = new AbortController();
+  studyChatCtrl = controller;
+
+  studyConversation.push({ role: 'user', content: text });
+  addStudyChatMessage('user', text);
+
+  input.value = '';
+  send.disabled = true;
+  status.textContent = 'Orion is thinking…';
+
+  const answer = addStudyChatMessage('ai', '');
+  let accumulated = '';
+
+  const scrollToBottom = () => {
+    chat.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  };
+
+  scrollToBottom();
+
+  try {
+    await stream(
+      [
+        {
+          role: 'system',
+          content:
+            'You are Orion, a patient study tutor. Continue the student’s current lesson. ' +
+            'Explain follow-up questions clearly, use examples, and adapt to the student’s level. ' +
+            'Help the student understand the method rather than only giving answers.'
+        },
+        ...studyConversation
+      ],
+      delta => {
+        if (controller.signal.aborted) return;
+
+        accumulated += delta;
+        answer.innerHTML = md(accumulated);
+        scrollToBottom();
+      },
+      controller.signal
+    );
+
+    if (controller.signal.aborted) return;
+
+    if (accumulated) {
+      studyConversation.push({
+        role: 'assistant',
+        content: accumulated
+      });
+    } else {
+      answer.textContent = 'No response was received. Please try again.';
+    }
+
+    status.textContent = '';
+  } catch (error) {
+    if (error.name !== 'AbortError') {
+      status.textContent =
+        'Could not get a response. Please try again.';
+    }
+  } finally {
+    if (studyChatCtrl === controller) {
+      studyChatCtrl = null;
+      studyChatBusy = false;
+      send.disabled = false;
+      input.focus();
+    }
+  }
+}
+
+$('studyChatForm')?.addEventListener('submit', sendStudyFollowUp);
 
 function setStudyMode(mode) {
   if (studyCtrl) { studyCtrl.abort(); studyCtrl = null; studyBusy = false; }
