@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#212121">
-<title>Lazarus AI</title>
+<title>Orion AI</title>
 
 <!-- Claude / Anthropic fonts -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -644,7 +644,7 @@ svg{display:block}
 <div id="auth" class="modal" hidden>
   <form id="af">
     <div class="auth-logo"></div>
-    <div class="logo">Welcome to Lazarus</div>
+    <div class="logo">Welcome to Orion</div>
     <p class="s" id="at">Sign in to continue</p>
     <input id="un" placeholder="Username" maxlength="30" autocomplete="username" hidden>
     <input id="em" type="email" placeholder="Email address" autocomplete="email" required>
@@ -671,7 +671,7 @@ svg{display:block}
       <button data-t="system">System</button>
     </div>
 
-    <label for="dn">What Lazarus calls you</label>
+    <label for="dn">What Orion calls you</label>
     <input id="dn" maxlength="30" autocomplete="off">
 
     <label>Personality</label>
@@ -717,7 +717,7 @@ svg{display:block}
         </svg>
       </button>
       <span class="sidebar-brand-logo lz-logo" aria-hidden="true"></span>
-      <span class="sidebar-brand">Lazarus</span>
+      <span class="sidebar-brand">Orion</span>
     </div>
 
     <button class="sidebar-action" id="newChat">
@@ -793,7 +793,7 @@ svg{display:block}
       </button>
       <div class="model-selector">
         <span class="model-logo lz-logo" aria-hidden="true"></span>
-        <span>Lazarus</span>
+        <span>Orion</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="6 9 12 15 18 9"/>
         </svg>
@@ -813,7 +813,7 @@ svg{display:block}
       <div id="thumbs" hidden></div>
 
       <div class="composer">
-        <textarea id="messageInput" rows="1" placeholder="Message Lazarus"></textarea>
+        <textarea id="messageInput" rows="1" placeholder="Message Orion"></textarea>
 
         <div class="composer-bottom">
           <div class="composer-left">
@@ -842,7 +842,7 @@ svg{display:block}
         </div>
       </div>
 
-      <p class="note">Lazarus can make mistakes. Check important info.</p>
+      <p class="note">Orion can make mistakes. Check important info.</p>
     </div>
 
     <section id="studyView" hidden>
@@ -921,7 +921,7 @@ const CFG = {
   SB_URL: 'https://iphsuaycvcdymmjiagks.supabase.co',
   SB_ANON: 'sb_publishable_FrBKbu_P4bsA0wqiHvRDdw_fH8ABbc7',
   API: 'https://lazarus-backend-75ik.onrender.com/api/chat',
-  SYSTEM: 'You are Lazarus, a helpful, clear and honest AI assistant created by Notanaidev and Xavier. ' +
+  SYSTEM: 'You are Orion, a helpful, clear and honest AI assistant created by Notanaidev and Xavier. ' +
           'If anyone asks who made or created you, say you were created by Notanaidev and Xavier. ' +
           'Use Markdown when it helps.'
 };
@@ -1251,7 +1251,7 @@ async function stream(messages, onDelta, signal) {
 
   if (res.status === 401) {
     throw new Error(guestToken
-      ? 'Sign in to keep chatting with Lazarus.'
+      ? 'Sign in to keep chatting with Orion.'
       : 'Your session expired. Please sign in again.');
   }
   if (!res.ok) throw new Error('Chat request failed (' + res.status + ')');
@@ -1484,7 +1484,7 @@ function bubble(role, text, images, index = null) {
   }
 
   message.innerHTML =
-    '<div class="mc"><div class="t"></div><div class="lg" role="img" aria-label="Lazarus is thinking"></div>' +
+    '<div class="mc"><div class="t"></div><div class="lg" role="img" aria-label="Orion is thinking"></div>' +
     '<div class="act"' + (text ? '' : ' hidden') + '>' + MESSAGE_ACTIONS + '</div></div>';
 
   const target = message.querySelector('.t');
@@ -1507,7 +1507,7 @@ function renderThread() {
 
   const priv = !!(cur && cur.private);
   document.body.classList.toggle('private', priv);
-  $('messageInput').placeholder = priv ? 'Message Lazarus privately' : 'Message Lazarus';
+  $('messageInput').placeholder = priv ? 'Message Orion  privately' : 'Message Orion';
   paintSend();
 
   if (priv) {
@@ -1957,7 +1957,7 @@ async function send(regenIndex = null) {
 const STUDY_MODES = {
   learn: {
     title: 'Learn mode',
-    description: 'Choose a topic and Lazarus will teach it step by step.',
+    description: 'Choose a topic and Orion will teach it step by step.',
     button: 'Start learning',
     prompt: 'You are a patient tutor. Teach the topic step by step with clear explanations and short examples. End with a quick check question.'
   },
@@ -2812,7 +2812,7 @@ function wire() {
       openAuth();
     }
   } catch (error) {
-    console.error('Lazarus initialization failed:', error);
+    console.error('Orion initialization failed:', error);
   }
 })();
 </script>
