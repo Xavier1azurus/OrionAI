@@ -555,3 +555,103 @@ button:active:not(:disabled) {
     flex-basis: 52px;
   }
 }
+/* Study Mode follow-up chat */
+.study-chat {
+  width: 100%;
+  max-width: 900px;
+  margin: 28px auto 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel);
+}
+
+.study-chat[hidden] {
+  display: none !important;
+}
+
+.study-chat-heading h3 {
+  margin: 0 0 6px;
+}
+
+.study-chat-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.study-chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.study-chat-message {
+  max-width: 90%;
+  padding: 12px 15px;
+  border-radius: 14px;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
+.study-chat-message.user {
+  align-self: flex-end;
+  background: var(--hover-strong);
+}
+
+.study-chat-message.ai {
+  align-self: flex-start;
+  background: var(--panel-light);
+}
+
+.study-chat-form {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  margin-top: 18px;
+}
+
+.study-chat-form textarea {
+  flex: 1;
+  min-width: 0;
+  resize: vertical;
+  max-height: 160px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.study-chat-form button {
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--purple);
+  color: white;
+  cursor: pointer;
+  font: inherit;
+}
+
+.study-chat-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#studyChatStatus {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .study-chat {
+    padding: 14px;
+  }
+
+  .study-chat-message {
+    max-width: 100%;
+  }
+}
