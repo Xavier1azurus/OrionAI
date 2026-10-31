@@ -895,6 +895,27 @@ svg{display:block}
          <div id="sRes" class="study-result"></div>
 <div id="sCards" class="fcs"></div>
 
+<div id="studyChat" class="study-chat" hidden>
+  <div class="study-chat-heading">
+    <h3>Ask Orion</h3>
+    <p>Ask questions about what you're learning.</p>
+  </div>
+
+  <div id="studyChatMessages" class="study-chat-messages"></div>
+
+  <form id="studyChatForm" class="study-chat-form">
+    <textarea
+      id="studyChatInput"
+      rows="1"
+      placeholder="Ask a follow-up question..."
+      aria-label="Ask Orion a study question"
+      required
+    ></textarea>
+    <button id="studyChatSend" type="submit">Send</button>
+  </form>
+
+  <div id="studyChatStatus" role="status"></div>
+</div>
 <!-- Study Mode follow-up chat -->
 <div id="studyChat" class="study-chat" hidden>
   <div class="study-chat-heading">
